@@ -7,7 +7,6 @@ namespace Tinker
 {
     public class HiddenObjectManager : MonoBehaviour
     {
-        [SerializeField] private Transform _hiddenObjectParent;
         [SerializeField] private List<HiddenObject>  hiddenObjects = new List<HiddenObject>();
 
         public int HiddenObjectsCount => hiddenObjects.Count;
@@ -16,7 +15,12 @@ namespace Tinker
         
         private HiddenObject _currentHiddenObject;
         private string  _currentClueDescription;
-        
+
+        private void Awake()
+        {
+            GetAllHiddenObjects();
+        }
+
         public void GetAssistance()
         {
             if (CheckAllFound)
@@ -42,19 +46,17 @@ namespace Tinker
             }
 
         }
-
-        private void OnValidate()
+        
+        [ContextMenu("Get All Hidden Objects")]
+        public void GetAllHiddenObjects()
         {
-            if(_hiddenObjectParent == null)return;
-            foreach (Transform child in _hiddenObjectParent)
+            hiddenObjects.Clear();
+            var allHiddenObjects = FindObjectsByType<HiddenObject>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+            for (var i = 0; i < allHiddenObjects.Length; i++)
             {
-                if (child.TryGetComponent(out HiddenObject hiddenObject))
-                {
-                    if (!hiddenObjects.Contains(hiddenObject))
-                    {
-                        hiddenObjects.Add(hiddenObject);
-                    }
-                }
+                hiddenObjects.Add(allHiddenObjects[i]);
+                allHiddenObjects[i].SetupId($"socks_{i + 1}");
             }
         }
     }

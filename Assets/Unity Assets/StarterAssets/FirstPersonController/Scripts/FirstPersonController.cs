@@ -14,6 +14,7 @@ namespace StarterAssets
 	public class FirstPersonController : MonoBehaviour
 	{
 		[Header("Player")]
+		[SerializeField] private PlayerInteractor _playerInteractor;
 		[Tooltip("Move speed of the character in m/s")]
 		public float MoveSpeed = 4.0f;
 		[Tooltip("Sprint speed of the character in m/s")]
@@ -65,7 +66,6 @@ namespace StarterAssets
 		// timeout deltatime
 		private float _jumpTimeoutDelta;
 		private float _fallTimeoutDelta;
-		private IInteractable _interactable;
 
 	
 #if ENABLE_INPUT_SYSTEM
@@ -76,6 +76,7 @@ namespace StarterAssets
 		private GameObject _mainCamera;
 
 		private const float _threshold = 0.01f;
+
 
 		private bool IsCurrentDeviceMouse
 		{
@@ -111,6 +112,7 @@ namespace StarterAssets
 			// reset our timeouts on start
 			_jumpTimeoutDelta = JumpTimeout;
 			_fallTimeoutDelta = FallTimeout;
+			
 		}
 
 		private void Update()
@@ -123,39 +125,13 @@ namespace StarterAssets
 
 		private void FixedUpdate()
 		{
-			InteractWithObject();
+			if(_playerInteractor == null)return;
+			_playerInteractor.InteractWithObject(_input);
 		}
 		private void LateUpdate()
 		{
 			CameraRotation();
 		}
-		
-		private void InteractWithObject()
-		{
-			var _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(_ray, out RaycastHit _hit))
-			{
-				if (_hit.collider.TryGetComponent(out IInteractable _interact))
-				{
-					_interactable = _interact;
-					_interactable.OnHover();
-				}
-			}
-			else
-			{
-				if (_interactable != null)
-				{
-					_interactable?.OnHoverExit();
-					_interactable = null;
-				
-				}
-			}
-
-			if (!_input.interact) return;
-			_interactable?.OnInteract();
-			_input.interact = false;
-		}
-
 
 		private void GroundedCheck()
 		{

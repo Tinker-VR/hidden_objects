@@ -10,14 +10,15 @@ namespace Tinker
         [TextArea(2,3)]
         [SerializeField] private string _clueDescription;
 
-        Animator _animator;
+        // Animator _animator;
         public string  Clue { get; set; }
         public bool HasFound { get; private set; }
 
-        private void Start()
+        public override void Start()
         {
+            base.Start();
             _isHidden = true;
-            _animator = GetComponentInChildren<Animator>();
+            //_animator = GetComponentInChildren<Animator>();
             if (!_visible)
             {
                 gameObject.SetActive(false);
@@ -27,8 +28,11 @@ namespace Tinker
         public override void OnInteract()
         {
             if(HasFound)return;
+            
+            GameManager.OnHiddenObjectFound?.Invoke(_id);
+            
             HasFound = true;
-            _animator.Play("hit");
+            gameObject.SetActive(false);
         }
         
         public void ToggleObject(bool toggle)
@@ -38,22 +42,9 @@ namespace Tinker
                 gameObject.SetActive(toggle);
             }
         }
-
-        private void OnValidate()
+        public void SetupId(string id)
         {
-            if (transform.parent != null)
-            {
-                Transform parent = transform.parent;
-                for (int i = 0; i < parent.childCount; i++)
-                {
-                    if (parent.GetChild(i) == transform)
-                    {
-                        _id = $"ghost_{i+1:00}";
-                        break;
-                    }
-                }
-            }
+             _id = id;
         }
-
     }
 }
