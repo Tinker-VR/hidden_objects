@@ -1,3 +1,4 @@
+using System;
 using Tinker;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
@@ -22,6 +23,22 @@ namespace StarterAssets
 		// [Header("Mouse Cursor Settings")]
 		// public bool cursorLocked = true;
 		// public bool cursorInputForLook = true;
+
+		private void OnEnable()
+		{
+			GameManager.OnEndGame += OnEndGame;
+		}
+		
+		private void OnDisable()
+		{
+			GameManager.OnEndGame -= OnEndGame;
+		}
+		
+		private void OnEndGame()
+		{
+			isPaused = true;
+		}
+
 
 #if ENABLE_INPUT_SYSTEM
 		public void OnMove(InputValue value)
@@ -48,7 +65,7 @@ namespace StarterAssets
 			SprintInput(value.isPressed);
 		}
 
-		public void OnInteract(InputValue value)
+		public void OnAttack(InputValue value)
 		{
 			InteractInput(value.isPressed);
 		}

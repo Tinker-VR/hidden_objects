@@ -8,11 +8,13 @@ namespace Tinker
         public delegate void HiddenObjectFoundEvent(string id);
         public delegate void UpdateGameDataEvent(InGameData inGameData);
         public delegate void PauseGameEvent(bool paused);
+        public delegate void EndGameEvent();
         
         
         public static HiddenObjectFoundEvent OnHiddenObjectFound;
         public static UpdateGameDataEvent OnUpdateInGameData;
         public static PauseGameEvent OnPauseGame;
+        public static EndGameEvent OnEndGame;
         
        private HiddenObjectManager m_hiddenObjectManager; 
 
@@ -50,6 +52,7 @@ namespace Tinker
             if (_inGameData.IsLevelComplete)
             {
                 Debug.Log("Level Complete");
+                OnEndGame?.Invoke();
             }
         }
         
