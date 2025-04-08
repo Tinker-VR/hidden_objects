@@ -7,7 +7,7 @@ namespace Tinker
     {
         public void StartGame()
         {
-            SceneManager.LoadScene("Sandbox");
+            SceneManager.LoadScene("Bedroom");
         }
 
         public void ExitGame()

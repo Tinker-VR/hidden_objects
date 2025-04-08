@@ -19,9 +19,9 @@ namespace StarterAssets
 		[Header("Movement Settings")]
 		public bool analogMovement;
 
-		[Header("Mouse Cursor Settings")]
-		public bool cursorLocked = true;
-		public bool cursorInputForLook = true;
+		// [Header("Mouse Cursor Settings")]
+		// public bool cursorLocked = true;
+		// public bool cursorInputForLook = true;
 
 #if ENABLE_INPUT_SYSTEM
 		public void OnMove(InputValue value)
@@ -31,10 +31,11 @@ namespace StarterAssets
 
 		public void OnLook(InputValue value)
 		{
-			if(cursorInputForLook)
-			{
-				LookInput(value.Get<Vector2>());
-			}
+			LookInput(value.Get<Vector2>());
+			// if(cursorInputForLook)
+			// {
+			// 	LookInput(value.Get<Vector2>());
+			// }
 		}
 
 		public void OnJump(InputValue value)
@@ -59,6 +60,12 @@ namespace StarterAssets
 #endif
 
 
+		private void Update()
+		{
+			Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
+			Cursor.visible = isPaused;
+		}
+		
 		public void MoveInput(Vector2 newMoveDirection)
 		{
 			if (isPaused)
@@ -96,23 +103,17 @@ namespace StarterAssets
 			if(isPaused)return;
 			interact = newInteractState;
 		}
+		
 
 		public void InteractPause(bool newPauseState)
 		{
 			if (newPauseState)
 			{
 				isPaused = !isPaused;
-				SetCursorState();
 				GameManager.OnPauseGame?.Invoke(isPaused);
 			}
 		}
-
-		private void SetCursorState()
-		{
-			Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
-
-			//	Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
-		}
+		
 	}
 	
 }

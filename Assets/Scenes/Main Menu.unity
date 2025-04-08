@@ -1378,6 +1378,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9117286701126540742, guid: 5456af1387df0c047953629c4ebb85e3, type: 3}
+      propertyPath: m_bgmAudioDatas.Array.data[1]._id
+      value: Bedroom
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

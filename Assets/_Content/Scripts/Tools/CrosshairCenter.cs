@@ -9,8 +9,6 @@ public class CrosshairCenter : MonoBehaviour
     {
         rectTransform = GetComponent<RectTransform>();
         CenterCrosshair();
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
