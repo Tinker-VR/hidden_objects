@@ -7,22 +7,28 @@ namespace Tinker
     {
         public delegate void HiddenObjectFoundEvent(string id);
         public delegate void UpdateGameDataEvent(InGameData inGameData);
+        public delegate void PauseGameEvent(bool paused);
+        
         
         public static HiddenObjectFoundEvent OnHiddenObjectFound;
         public static UpdateGameDataEvent OnUpdateInGameData;
+        public static PauseGameEvent OnPauseGame;
         
        private HiddenObjectManager m_hiddenObjectManager; 
 
-       [SerializeField] private InGameData _inGameData;
+       private InGameData _inGameData;
 
        private void OnEnable()
        {
            OnHiddenObjectFound += HiddenObjectFound;
+           OnPauseGame += PauseGame;
        }
-       
+
+
        private void OnDisable()
        {
            OnHiddenObjectFound -= HiddenObjectFound;
+           OnPauseGame -= PauseGame;
        }
 
        private void Start()
@@ -46,5 +52,11 @@ namespace Tinker
                 Debug.Log("Level Complete");
             }
         }
+        
+        private void PauseGame(bool paused)
+        {
+           Time.timeScale = paused ? 0 : 1;
+        }
+
     }
 }

@@ -56,8 +56,18 @@ namespace Tinker
             _delayTimer += Time.fixedDeltaTime;
 
             if (!_input.interact) return;
-            if (_delayTimer < m_interactDelay) return;
-            Debug.Log("Interacting");
+            if (_delayTimer < m_interactDelay)
+            {
+                _input.interact = false;
+                return;
+            }
+
+            if (AudioManager.Instance)
+            {
+                AudioManager.Instance.PlaySFX("click");
+            }
+
+
             if (_interactable == null)
             {
                 ShakeCamera();

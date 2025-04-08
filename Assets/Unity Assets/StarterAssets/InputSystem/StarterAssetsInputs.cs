@@ -1,3 +1,4 @@
+using Tinker;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -13,6 +14,7 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
 		public bool interact;
+		public bool isPaused;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -49,42 +51,67 @@ namespace StarterAssets
 		{
 			InteractInput(value.isPressed);
 		}
+
+		public void OnPause(InputValue value)
+		{
+			InteractPause(value.isPressed);
+		}
 #endif
 
 
 		public void MoveInput(Vector2 newMoveDirection)
 		{
+			if (isPaused)
+			{
+				move = Vector2.zero;
+				return;
+			}
 			move = newMoveDirection;
 		} 
 
 		public void LookInput(Vector2 newLookDirection)
 		{
+			if (isPaused)
+			{
+				look = Vector2.zero;
+				return;
+			}
 			look = newLookDirection;
 		}
 
 		public void JumpInput(bool newJumpState)
 		{
+			if(isPaused)return;
 			jump = newJumpState;
 		}
 
 		public void SprintInput(bool newSprintState)
 		{
+			if(isPaused)return;
 			sprint = newSprintState;
 		}
 
 		public void InteractInput(bool newInteractState)
 		{
+			if(isPaused)return;
 			interact = newInteractState;
 		}
 
-		private void OnApplicationFocus(bool hasFocus)
+		public void InteractPause(bool newPauseState)
 		{
-			SetCursorState(cursorLocked);
+			if (newPauseState)
+			{
+				isPaused = !isPaused;
+				SetCursorState();
+				GameManager.OnPauseGame?.Invoke(isPaused);
+			}
 		}
 
-		private void SetCursorState(bool newState)
+		private void SetCursorState()
 		{
-			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
+			Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
+
+			//	Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
 	}
 	
