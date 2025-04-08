@@ -6,7 +6,6 @@ namespace Tinker
     public class HiddenObject : RootInteractableObject
     {
         [SerializeField] private string _id;
-        [SerializeField] private bool _visible = true;
         [TextArea(2,3)]
         [SerializeField] private string _clueDescription;
 
@@ -22,11 +21,6 @@ namespace Tinker
         {
             base.Start();
             _isHidden = true;
-            //_animator = GetComponentInChildren<Animator>();
-            if (!_visible)
-            {
-                gameObject.SetActive(false);
-            }
         }
 
         public override void OnInteract()

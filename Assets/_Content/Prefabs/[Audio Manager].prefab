@@ -51,8 +51,8 @@ MonoBehaviour:
   m_bgmAudioDatas:
   - _id: Main Menu
     _audioClip: {fileID: 8300000, guid: 1f46a0147e9f8984ba2e377dfd20d47f, type: 3}
-  - _id: Sandbox
-    _audioClip: {fileID: 8300000, guid: 31e76036527387141ac7aadaa8174798, type: 3}
+  - _id: Bedroom
+    _audioClip: {fileID: 8300000, guid: 25ffb3c5bde61d74f992342be860326f, type: 3}
   m_sfxAudioDatas:
   - _id: click
     _audioClip: {fileID: 8300000, guid: 45ce0d54478783745955c3009b182069, type: 3}
@@ -61,7 +61,9 @@ MonoBehaviour:
   - _id: cabinet-open-door
     _audioClip: {fileID: 8300000, guid: 9aca39d7aac428d4c82d858f1ab6b505, type: 3}
   - _id: boulder-push
-    _audioClip: {fileID: 8300000, guid: 35988024b01ea8442b30d7ee498c9472, type: 3}
+    _audioClip: {fileID: 8300000, guid: 2661ef54f0bbf7b4e90190b54d06dad5, type: 3}
+  - _id: light-switch
+    _audioClip: {fileID: 8300000, guid: c380bd6d713a0e84b8ade13c82c4e4c5, type: 3}
 --- !u!1 &3581537473551339637
 GameObject:
   m_ObjectHideFlags: 0

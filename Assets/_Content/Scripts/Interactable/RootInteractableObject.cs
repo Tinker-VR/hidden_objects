@@ -17,18 +17,9 @@ namespace Tinker
         {
             if (TryGetComponent(out MeshRenderer renderer))
             {
-                _meshRenderer = renderer;
-                _originalMaterials = renderer.materials;
-
-                if (m_outlineMaterial != null)
-                {
-                    _outlineMaterials = new Material[_originalMaterials.Length + 1];
-                    _originalMaterials.CopyTo(_outlineMaterials, 0);
-                    _outlineMaterials[_outlineMaterials.Length - 1] = m_outlineMaterial;
-                }
+                SetupOutline(renderer);
             }
         }
-
         public virtual void OnHover()
         {
             if (_isHidden || isHovered || m_outlineMaterial == null) return;
@@ -53,6 +44,17 @@ namespace Tinker
             {
                 OnHoverExit(); 
             }
+        }
+        
+        protected void SetupOutline(MeshRenderer renderer)
+        {
+            _meshRenderer = renderer;
+            _originalMaterials = renderer.materials;
+
+            if (m_outlineMaterial == null) return;
+            _outlineMaterials = new Material[_originalMaterials.Length + 1];
+            _originalMaterials.CopyTo(_outlineMaterials, 0);
+            _outlineMaterials[^1] = m_outlineMaterial;
         }
     }
 }

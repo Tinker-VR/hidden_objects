@@ -12,6 +12,10 @@ namespace Tinker
         {
             m_light.enabled = !m_light.enabled;
             
+            if (AudioManager.Instance)
+            {
+                AudioManager.Instance.PlaySFX("light-switch");
+            }
             m_onInteract.Invoke(m_light.enabled);
         }
     }
