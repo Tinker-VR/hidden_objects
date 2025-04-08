@@ -112,9 +112,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7770bc29e2d4e74a83d9169c5ca4f10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_outlineMaterial: {fileID: 0}
   _id: socks_01
   _visible: 1
   _clueDescription: 
+  _visualEffect: {fileID: 4425129568604114668, guid: bbeeb0ddc21369746aaaae5c5c1c09cf, type: 3}
+  _floatDistance: 0.2
+  _floatDuration: 1.5
 --- !u!65 &6082424716586937555
 BoxCollider:
   m_ObjectHideFlags: 0
